@@ -46,7 +46,22 @@ class SupBot(SingleServerIRCBot):
         conn = self.connection
 
         if cmd == '!sup':
-            for [n,msg] in self.suplist:
+            i = 20
+            if len(arglist) > 0:
+                try:
+                    i = int(arglist[0])
+                except ValueError:
+                    i = 20
+
+            rev = reversed(self.suplist)
+            msgs = []
+            for v in rev:
+                msgs.append(v)
+                i -= 1
+                if i <= 0:
+                    break
+
+            for [n,msg] in reversed(msgs):
                 conn.privmsg(nm_to_n(e.source()), "%s: %s" % (n,msg))
 
         if cmd == '!help':
