@@ -49,6 +49,13 @@ class SupBot(SingleServerIRCBot):
             for [n,msg] in self.suplist:
                 conn.privmsg(nm_to_n(e.source()), "%s: %s" % (n,msg))
 
+        if cmd == '!help':
+            target = nm_to_n(e.source())
+            conn.privmsg(target, 'This bot provides a few commands for users.')
+            conn.privmsg(target, '!sup - displays the last few lines of scrollback')
+            conn.privmsg(target, '!help - displays this message')
+            conn.privmsg(target, 'This bot is Open Source. Please contribute code at https://github.com/ENOTTY/supbot')
+
 def main():
     import sys
     if len(sys.argv) != 4:
