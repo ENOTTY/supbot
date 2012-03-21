@@ -28,17 +28,16 @@ class SupBot(SingleServerIRCBot):
         c.join(self.channel)
 
     def on_privmsg(self, c, e):
-        self.on_pubmsg(c, e)
-
-    def on_pubmsg(self, c, e):
         msg = e.arguments()[0]
         if len(msg) > 0 and msg[0] == '!':
             self.do_command(e, msg.split(' '))
 
-        nick = nm_to_n(e.source())
-        self.suplist.append([nick, msg])
+    def on_pubmsg(self, c, e):
+        self.on_privmsg(c, e)
 
-        return
+        nick = nm_to_n(e.source())
+        msg = e.arguments()[0]
+        self.suplist.append([nick, msg])
 
     def do_command(self, e, cmdlist):
         cmd = cmdlist[0]
